@@ -1,25 +1,19 @@
 ![CF](http://i.imgur.com/7v5ASc8.png) LAB
 =================================================
 
-## Project Name
+## 05 - Bitmap - Project
 
-### Author: Student/Group Name
+### Author: Heather Cherewaty & Jacob Anderson
 
 ### Links and Resources
-* [repo](http://xyz.com)
+* [repo](https://github.com/hcherewaty/05-project)
 * [travis](http://xyz.com)
-* [back-end](http://xyz.com)
-* [front-end](http://xyz.com)
+
 
 ### Modules
 #### `modulename.js`
 ##### Exported Values and Methods
 
-###### `foo(thing) -> string`
-Usage Notes or examples
-
-###### `bar(array) -> array`
-Usage Notes or examples
 
 ### Setup
 #### `.env` requirements
@@ -38,5 +32,3 @@ Usage Notes or examples
 * What assertions were made?
 * What assertions need to be / should be made?
 
-#### UML
-Link to an image of the UML for your application and response to events
