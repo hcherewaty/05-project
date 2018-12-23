@@ -18,6 +18,17 @@ function Bitmap(filePath) {
 Bitmap.prototype.parse = function(buffer) {
   this.buffer = buffer;
   this.type = buffer.toString('utf-8', 0, 2);
+  this.size = buffer.readInt32LE(2);
+  this.offset = buffer.readInt32LE(10);
+  this.headerSize = buffer.readInt32LE(14);
+  this.width = buffer.readInt32LE(18);
+  this.height = buffer.readInt32LE(22);
+  this.bitPerPixel = buffer.readInt16LE(28);
+  this.colorArray = buffer.slice(54, this.offset);
+  this.pixelArray = buffer.slice(1078);
+  if(! this.colorArray.length) {
+    throw 'Invalid . bmp format';
+  }
   //... and so on
 };
 
@@ -37,27 +48,63 @@ Bitmap.prototype.transform = function(operation) {
  * Pro Tip: Use "pass by reference" to alter the bitmap's buffer in place so you don't have to pass it around ...
  * @param bmp
  */
-const transformGreyscale = (bmp) => {
 
-  console.log('Transforming bitmap into greyscale', bmp);
-
-  //TODO: Figure out a way to validate that the bmp instance is actually valid before trying to transform it
-
-  //TODO: alter bmp to make the image greyscale ...
-
+const getRandomNum = () => {
+  return Math.floor(Math.random() * Math.floor(256));
 };
 
-const doTheInversion = (bmp) => {
-  bmp = {};
-}
+const darkJohn = (bmp) => {
+  if(! bmp.colorArray.length) throw 'must pass valid bmp object';
+
+  for (let i = 0; i < bmp.colorArray.length; i += 4) {
+    bmp.colorArray[i] = bmp.colorArray[i] / 3;
+    bmp.colorArray[i + 1] = bmp.colorArray[i + 1] / 3;
+    bmp.colorArray[i + 2] = bmp.colorArray[i + 2] / 3;
+  }
+};
+
+const doRandom = (bmp) => {
+  if(! bmp.colorArray.length) throw 'must pass valid bmp object';
+
+  for (let i = 0; i < bmp.colorArray.length; i += 4) {
+    bmp.colorArray[i] = getRandomNum();
+    bmp.colorArray[i + 1] = getRandomNum();
+    bmp.colorArray[i + 2] = getRandomNum();
+  }
+};
+
+
+// console.log('Transforming bitmap into greyscale', bmp);
+
+//TODO: Figure out a way to validate that the bmp instance is actually valid before trying to transform it
+
+//TODO: alter bmp to make the image greyscale ...
+
+const doRedScale = (bmp) => {
+  if(! bmp.colorArray.length) throw 'must pass valid bmp object';
+
+  for (let i = 0; i < bmp.colorArray.length; i += 4) {
+    bmp.colorArray[i + 2] = 255;
+  }
+};
+
+const doJohndice = (bmp) => {
+  if(! bmp.colorArray.length) throw 'must pass valid bmp object';
+
+  for (let i = 0; i < bmp.colorArray.length; i += 4) {
+    bmp.colorArray[i] = 0;
+  }
+};
 
 /**
  * A dictionary of transformations
  * Each property represents a transformation that someone could enter on the command line and then a function that would be called on the bitmap to do this job
  */
 const transforms = {
-  greyscale: transformGreyscale,
-  invert: doTheInversion
+  darken: darkJohn,
+  redscale: doRedScale,
+  johndice: doJohndice,
+  random: doRandom,
 };
 
 // ------------------ GET TO WORK ------------------- //
@@ -92,4 +139,3 @@ const [file, operation] = process.argv.slice(2);
 let bitmap = new Bitmap(file);
 
 transformWithCallbacks();
-
