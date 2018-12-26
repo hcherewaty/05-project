@@ -42,69 +42,17 @@ Bitmap.prototype.transform = function(operation) {
   this.newFile = this.file.replace(/\.bmp/, `.${operation}.bmp`);
 };
 
-/**
- * Sample Transformer (greyscale)
- * Would be called by Bitmap.transform('greyscale')
- * Pro Tip: Use "pass by reference" to alter the bitmap's buffer in place so you don't have to pass it around ...
- * @param bmp
- */
-
-const getRandomNum = () => {
-  return Math.floor(Math.random() * Math.floor(256));
-};
-
-const darkJohn = (bmp) => {
-  if(! bmp.colorArray.length) throw 'must pass valid bmp object';
-
-  for (let i = 0; i < bmp.colorArray.length; i += 4) {
-    bmp.colorArray[i] = bmp.colorArray[i] / 3;
-    bmp.colorArray[i + 1] = bmp.colorArray[i + 1] / 3;
-    bmp.colorArray[i + 2] = bmp.colorArray[i + 2] / 3;
-  }
-};
-
-const doRandom = (bmp) => {
-  if(! bmp.colorArray.length) throw 'must pass valid bmp object';
-
-  for (let i = 0; i < bmp.colorArray.length; i += 4) {
-    bmp.colorArray[i] = getRandomNum();
-    bmp.colorArray[i + 1] = getRandomNum();
-    bmp.colorArray[i + 2] = getRandomNum();
-  }
-};
-
-
-// console.log('Transforming bitmap into greyscale', bmp);
-
-//TODO: Figure out a way to validate that the bmp instance is actually valid before trying to transform it
-
-//TODO: alter bmp to make the image greyscale ...
-
-const doRedScale = (bmp) => {
-  if(! bmp.colorArray.length) throw 'must pass valid bmp object';
-
-  for (let i = 0; i < bmp.colorArray.length; i += 4) {
-    bmp.colorArray[i + 2] = 255;
-  }
-};
-
-const doJohndice = (bmp) => {
-  if(! bmp.colorArray.length) throw 'must pass valid bmp object';
-
-  for (let i = 0; i < bmp.colorArray.length; i += 4) {
-    bmp.colorArray[i] = 0;
-  }
-};
 
 /**
  * A dictionary of transformations
  * Each property represents a transformation that someone could enter on the command line and then a function that would be called on the bitmap to do this job
  */
 const transforms = {
-  darken: darkJohn,
-  redscale: doRedScale,
-  johndice: doJohndice,
-  random: doRandom,
+  darken: require('./transforms/darken.js'),
+  redscale: require('./transforms/redscale.js'),
+  johndice: require('./transforms/johndice.js'),
+  random: require('./transforms/random.js'),
+
 };
 
 // ------------------ GET TO WORK ------------------- //
