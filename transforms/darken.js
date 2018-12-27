@@ -8,4 +8,5 @@ module.exports = (bmp) => {
     bmp.colorArray[i + 1] = bmp.colorArray[i + 1] / 3;
     bmp.colorArray[i + 2] = bmp.colorArray[i + 2] / 3;
   }
+  return bmp.colorArray;
 };

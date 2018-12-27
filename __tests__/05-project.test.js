@@ -11,16 +11,16 @@ const getRandomNum = () => {
 };
 
 let bmp = {
-  testColorArray: [],
+  colorArray: [],
 };
 
 for (let i=0; i < 100; i++) {
   bmp.colorArray.push(9);
 }
 
-let darkenColorArray = darken(bmp.colorArray);
-let johndiceColorArray = johndice(bmp.colorArray);
-let redScaleColorArray = redscale(bmp.colorArray);
+let darkenColorArray = darken(bmp);
+let johndiceColorArray = johndice(bmp);
+let redScaleColorArray = redscale(bmp);
 
 describe('transform modules', () => {
   describe('darken', () => {

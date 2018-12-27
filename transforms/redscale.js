@@ -6,4 +6,5 @@ module.exports = (bmp) => {
   for (let i = 0; i < bmp.colorArray.length; i+= 4) {
     bmp.colorArray[i + 2] = 255;
   }
+  return bmp.colorArray;
 };
