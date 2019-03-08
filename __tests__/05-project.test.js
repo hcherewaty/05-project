@@ -25,17 +25,17 @@ let redScaleColorArray = redscale(bmp);
 describe('transform modules', () => {
   describe('darken', () => {
     it('should darken the image by dividing each rgb value by 3', () => {
-      let expectedB = bmp.colorArray[0]/3;
-      let expectedG = bmp.colorArray[1]/3;
-      let expectedR = bmp.colorArray[2]/3;
+      // let expectedB = bmp.colorArray[0]/3;
+      // let expectedG = bmp.colorArray[1]/3;
+      // let expectedR = bmp.colorArray[2]/3;
 
       let darkIndexB = darkenColorArray[0];
       let darkIndexG = darkenColorArray[1];
       let darkIndexR = darkenColorArray[2];
 
-      expect(darkIndexB).toEqual(expectedB);
-      expect(darkIndexG).toEqual(expectedG);
-      expect(darkIndexR).toEqual(expectedR);
+      expect(darkIndexB).toEqual(0);
+      expect(darkIndexG).toEqual(3);
+      expect(darkIndexR).toEqual(255);
     });
   });
 
